@@ -10,7 +10,7 @@ To calculate values in leaf states, the Logic::calc_score function is used.
 You can set your params in settings.json:  
 ### WindowSize
 Width - unsigned int from 0 to screen size. 0 - fullscreen.  
-Hight - unsigned int from 0 to screen size. 0 - fullscreen.  
+Height - unsigned int from 0 to screen size. 0 - fullscreen.  
 ### Bot
 IsWhiteBot - true/false.  
 IsBlackBot - true/false.  
