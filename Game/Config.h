@@ -13,7 +13,7 @@ class Config
         reload();
     }
 
-    // Обновляет настройки из файла
+    // РћР±РЅРѕРІР»СЏРµС‚ РЅР°СЃС‚СЂРѕР№РєРё РёР· С„Р°Р№Р»Р°
     void reload()
     {
         std::ifstream fin(project_path + "settings.json");
@@ -21,7 +21,7 @@ class Config
         fin.close();
     }
 
-    // Возвращает значение указанной настройки
+    // Р’РѕР·РІСЂР°С‰Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ СѓРєР°Р·Р°РЅРЅРѕР№ РЅР°СЃС‚СЂРѕР№РєРё
     auto operator()(const string &setting_dir, const string &setting_name) const
     {
         return config[setting_dir][setting_name];

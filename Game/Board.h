@@ -25,16 +25,16 @@ public:
     }
 
     // draws start board
-    // Прорисовка доски
+    // РџСЂРѕСЂРёСЃРѕРІРєР° РґРѕСЃРєРё
     int start_draw()
     {
-        // Инициализация SDL
+        // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ SDL
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
         {
             print_exception("SDL_Init can't init SDL2 lib");
             return 1;
         }
-        // Если размеры окна не заданы, то задать их как минимальный размер экрана
+        // Р•СЃР»Рё СЂР°Р·РјРµСЂС‹ РѕРєРЅР° РЅРµ Р·Р°РґР°РЅС‹, С‚Рѕ Р·Р°РґР°С‚СЊ РёС… РєР°Рє РјРёРЅРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ СЌРєСЂР°РЅР°
         if (W == 0 || H == 0)
         {
             SDL_DisplayMode dm;
@@ -47,7 +47,7 @@ public:
             W -= W / 15;
             H = W;
         }
-        // Создание окна
+        // РЎРѕР·РґР°РЅРёРµ РѕРєРЅР°
         win = SDL_CreateWindow("Checkers", 0, H / 30, W, H, SDL_WINDOW_RESIZABLE);
         if (win == nullptr)
         {
@@ -60,7 +60,7 @@ public:
             print_exception("SDL_CreateRenderer can't create renderer");
             return 1;
         }
-        // Загрузка текстур
+        // Р—Р°РіСЂСѓР·РєР° С‚РµРєСЃС‚СѓСЂ
         board = IMG_LoadTexture(ren, board_path.c_str());
         w_piece = IMG_LoadTexture(ren, piece_white_path.c_str());
         b_piece = IMG_LoadTexture(ren, piece_black_path.c_str());
@@ -74,13 +74,13 @@ public:
             return 1;
         }
         SDL_GetRendererOutputSize(ren, &W, &H);
-        // Рендер
+        // Р РµРЅРґРµСЂ
         make_start_mtx();
         rerender();
         return 0;
     }
 
-    // Перерисовка доски
+    // РџРµСЂРµСЂРёСЃРѕРІРєР° РґРѕСЃРєРё
     void redraw()
     {
         game_results = -1;
@@ -91,7 +91,7 @@ public:
         clear_highlight();
     }
 
-    // Ход пешки по move_pos
+    // РҐРѕРґ РїРµС€РєРё РїРѕ move_pos
     void move_piece(move_pos turn, const int beat_series = 0)
     {
         if (turn.xb != -1)
@@ -101,7 +101,7 @@ public:
         move_piece(turn.x, turn.y, turn.x2, turn.y2, beat_series);
     }
 
-    // Ход пешки по координатам
+    // РҐРѕРґ РїРµС€РєРё РїРѕ РєРѕРѕСЂРґРёРЅР°С‚Р°Рј
     void move_piece(const POS_T i, const POS_T j, const POS_T i2, const POS_T j2, const int beat_series = 0)
     {
         if (mtx[i2][j2])
@@ -119,14 +119,14 @@ public:
         add_history(beat_series);
     }
 
-    // "Отпускание" пешки
+    // "РћС‚РїСѓСЃРєР°РЅРёРµ" РїРµС€РєРё
     void drop_piece(const POS_T i, const POS_T j)
     {
         mtx[i][j] = 0;
         rerender();
     }
 
-    // Превращение пешки в "дамку"
+    // РџСЂРµРІСЂР°С‰РµРЅРёРµ РїРµС€РєРё РІ "РґР°РјРєСѓ"
     void turn_into_queen(const POS_T i, const POS_T j)
     {
         if (mtx[i][j] == 0 || mtx[i][j] > 2)
@@ -141,7 +141,7 @@ public:
         return mtx;
     }
 
-    // Подсветка ячеек
+    // РџРѕРґСЃРІРµС‚РєР° СЏС‡РµРµРє
     void highlight_cells(vector<pair<POS_T, POS_T>> cells)
     {
         for (auto pos : cells)
@@ -152,7 +152,7 @@ public:
         rerender();
     }
 
-    // Очистка подсветки
+    // РћС‡РёСЃС‚РєР° РїРѕРґСЃРІРµС‚РєРё
     void clear_highlight()
     {
         for (POS_T i = 0; i < 8; ++i)
@@ -162,7 +162,7 @@ public:
         rerender();
     }
 
-    // Подсветка активной пешки
+    // РџРѕРґСЃРІРµС‚РєР° Р°РєС‚РёРІРЅРѕР№ РїРµС€РєРё
     void set_active(const POS_T x, const POS_T y)
     {
         active_x = x;
@@ -170,7 +170,7 @@ public:
         rerender();
     }
 
-    // Очистка подсветки активной пешки
+    // РћС‡РёСЃС‚РєР° РїРѕРґСЃРІРµС‚РєРё Р°РєС‚РёРІРЅРѕР№ РїРµС€РєРё
     void clear_active()
     {
         active_x = -1;
@@ -178,13 +178,13 @@ public:
         rerender();
     }
 
-    // Определение, что подстветка включена
+    // РћРїСЂРµРґРµР»РµРЅРёРµ, С‡С‚Рѕ РїРѕРґСЃС‚РІРµС‚РєР° РІРєР»СЋС‡РµРЅР°
     bool is_highlighted(const POS_T x, const POS_T y)
     {
         return is_highlighted_[x][y];
     }
 
-    // "Откат" хода
+    // "РћС‚РєР°С‚" С…РѕРґР°
     void rollback()
     {
         auto beat_series = max(1, *(history_beat_series.rbegin()));
@@ -198,7 +198,7 @@ public:
         clear_active();
     }
 
-    // Отображение результата игры
+    // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚Р° РёРіСЂС‹
     void show_final(const int res)
     {
         game_results = res;
@@ -212,7 +212,7 @@ public:
         rerender();
     }
 
-    // Выход
+    // Р’С‹С…РѕРґ
     void quit()
     {
         SDL_DestroyTexture(board);
@@ -234,7 +234,7 @@ public:
     }
 
 private:
-    // Добавление хода в историю
+    // Р”РѕР±Р°РІР»РµРЅРёРµ С…РѕРґР° РІ РёСЃС‚РѕСЂРёСЋ
     void add_history(const int beat_series = 0)
     {
         history_mtx.push_back(mtx);
@@ -354,7 +354,7 @@ private:
     }
 
   public:
-    // Размеры окна
+    // Р Р°Р·РјРµСЂС‹ РѕРєРЅР°
     int W = 0;
     int H = 0;
     // history of boards

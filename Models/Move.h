@@ -3,32 +3,32 @@
 
 typedef int8_t POS_T;
 
-// Структура, описывающая ход пешки
+// РЎС‚СЂСѓРєС‚СѓСЂР°, РѕРїРёСЃС‹РІР°СЋС‰Р°СЏ С…РѕРґ РїРµС€РєРё
 struct move_pos
 {
-    // Откуда
+    // РћС‚РєСѓРґР°
     POS_T x, y;             // from
-    // Куда
+    // РљСѓРґР°
     POS_T x2, y2;           // to
-    // Битая пешка
+    // Р‘РёС‚Р°СЏ РїРµС€РєР°
     POS_T xb = -1, yb = -1; // beaten
 
-    // Простой ход
+    // РџСЂРѕСЃС‚РѕР№ С…РѕРґ
     move_pos(const POS_T x, const POS_T y, const POS_T x2, const POS_T y2) : x(x), y(y), x2(x2), y2(y2)
     {
     }
-    // Ход со взятием пешки
+    // РҐРѕРґ СЃРѕ РІР·СЏС‚РёРµРј РїРµС€РєРё
     move_pos(const POS_T x, const POS_T y, const POS_T x2, const POS_T y2, const POS_T xb, const POS_T yb)
         : x(x), y(y), x2(x2), y2(y2), xb(xb), yb(yb)
     {
     }
 
-    // Сравнение ходов на равенство
+    // РЎСЂР°РІРЅРµРЅРёРµ С…РѕРґРѕРІ РЅР° СЂР°РІРµРЅСЃС‚РІРѕ
     bool operator==(const move_pos &other) const
     {
         return (x == other.x && y == other.y && x2 == other.x2 && y2 == other.y2);
     }
-    // Сравнение ходов на неравенство
+    // РЎСЂР°РІРЅРµРЅРёРµ С…РѕРґРѕРІ РЅР° РЅРµСЂР°РІРµРЅСЃС‚РІРѕ
     bool operator!=(const move_pos &other) const
     {
         return !(*this == other);
